@@ -1,4 +1,4 @@
-# This is the webapp repository
+# TensorBeat Webapp
 
 To run the app, clone the repository and run `npm ci` to install dependencies. Then run `npm run dev` to start the
 app in development mode.
