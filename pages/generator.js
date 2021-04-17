@@ -7,14 +7,6 @@ export default function Generator() {
 
     function handleSubmit(e) {
 
-        fetch("https://test", {
-            method: "POST",
-            body: {
-                playlist: e.target.elements["playlist"],
-            },
-
-        })
-
         e.preventDefault();
         return false;
     }
