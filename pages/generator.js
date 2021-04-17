@@ -27,7 +27,7 @@ export default function Generator() {
                     </p>
                 </div>
 
-                <form className={pageStyles.section}>
+                <form className={pageStyles.section} onSubmit={handleSubmit}>
                     <div className={pageStyles.row}>
                         <input type={"text"} className={boxStyles.inputBox} style={{width: "600px"}} name={"playlist"}/>
                     </div>
