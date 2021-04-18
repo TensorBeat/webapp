@@ -34,13 +34,18 @@ export default function Generator() {
           </p>
         </div>
 
-        <form className={pageStyles.section}>
+        <form className={pageStyles.section} onSubmit={handleSubmit}>
           <div className={pageStyles.row}>
             <input
               type={"text"}
               className={boxStyles.inputBox}
-              style={{ width: "600px" }}
+              style={{
+                width: "600px",
+                fontSize: "1.5rem",
+                textAlign: "center",
+              }}
               name={"playlist"}
+              placeholder={"Playlist URL"}
             />
           </div>
           <button
