@@ -8,7 +8,7 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>TensorBeat</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/tensorbeat.svg" />
       </Head>
 
       <main className={styles.main}>

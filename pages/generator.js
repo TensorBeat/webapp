@@ -21,7 +21,7 @@ export default function Generator() {
     <div className={pageStyles.container}>
       <Head>
         <title>Generator - TensorBeat</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/tensorbeat.svg" />
       </Head>
 
       <main className={pageStyles.main}>

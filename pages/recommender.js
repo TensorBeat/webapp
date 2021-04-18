@@ -9,7 +9,7 @@ export default function Recommender() {
     <div className={pageStyles.container}>
       <Head>
         <title>Recommender - TensorBeat</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/tensorbeat.svg" />
       </Head>
 
       <main className={pageStyles.main}>
