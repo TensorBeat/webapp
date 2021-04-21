@@ -14,5 +14,10 @@
     "react-dom": "17.0.1",
     "react-piano": "^3.1.3",
     "soundfont-player": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.41",
+    "@types/react": "^17.0.3",
+    "typescript": "^4.2.4"
   }
 }

@@ -32,9 +32,12 @@ export default class Keyboard extends Component {
     activeNotes: [],
   };
 
+  scheduledEvents: [];
+
   componentDidMount = () => {
     this.setState({
-      audioContext: new (window.AudioContext || window.webkitAudioContext)(),
+      // audioContext: new (window.AudioContext || window.webkitAudioContext)(),
+      audioContext: new window.AudioContext()
     });
   };
 
