@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/page.module.css";
 import logo from "../public/tensorbeat.svg";
-import StandardFooter from "./Components/standardFooter";
+import StandardFooter from "../components/standardFooter";
 
 export default function Home() {
   return (

@@ -2,13 +2,13 @@ import Head from "next/head";
 import React, { Component } from "react";
 import pageStyles from "../styles/page.module.css";
 import boxStyles from "../styles/box.module.css";
-import StandardFooter from "./Components/standardFooter";
+import StandardFooter from "../components/standardFooter";
 import Piano, { KeyboardShortcuts, MidiNumbers } from "react-piano";
 
 import "react-piano/dist/styles.css";
 
-import SoundFontProvider from "./Components/soundFontProvider";
-import PianoWithRecording from "./Components/pianoWithRecording";
+import SoundFontProvider from "../components/soundFontProvider";
+import PianoWithRecording from "../components/pianoWithRecording";
 
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 

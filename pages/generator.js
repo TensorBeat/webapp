@@ -2,7 +2,7 @@ import Head from "next/head";
 import pageStyles from "../styles/page.module.css";
 import boxStyles from "../styles/box.module.css";
 import logo from "../public/tensorbeat-muted.svg";
-import StandardFooter from "./Components/standardFooter";
+import StandardFooter from "../components/standardFooter";
 
 export default function Generator() {
   function handleSubmit(e) {
