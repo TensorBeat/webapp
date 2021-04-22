@@ -4,11 +4,11 @@ import pageStyles from "../styles/page.module.css";
 import boxStyles from "../styles/box.module.css";
 import StandardFooter from "../components/standardFooter";
 import {KeyboardShortcuts, MidiNumbers} from "react-piano";
-
 import "react-piano/dist/styles.css";
-
 import SoundFontProvider from "../components/soundFontProvider";
 import PianoWithRecording from "../components/pianoWithRecording";
+
+import {v4 as uuidv4} from "uuid";
 
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
@@ -22,11 +22,25 @@ const keyboardShortcuts = KeyboardShortcuts.create({
     keyboardConfig: KeyboardShortcuts.HOME_ROW,
 });
 
+interface Frame {
+    id: string,
+    notes: string,
+    start: number,
+    duration: number,
+}
+
+interface KeyboardState {
+    recording: Frame[],
+    activeNotes: string[],
+    audioContext: any,
+}
+
 const PIANO_WIDTH = 500;
 const NOTE_DURATION = 200; // milliseconds
 
 export default class Keyboard extends Component {
-    state = {
+
+    state: KeyboardState = {
         audioContext: null,
         recording: [],
         activeNotes: [],
@@ -46,10 +60,21 @@ export default class Keyboard extends Component {
         this.scheduledEvents = [];
     }
 
-    appendToRecording = (newItem) => {
+    appendToRecording = (item: {notes: string, start: number, duration: number}) => {
+
+        const {notes, start, duration} = item;
+
+        const frame: Frame = {
+            id: uuidv4(),
+            notes: notes,
+            start: start,
+            duration: duration,
+        }
+
         this.setState({
-            recording: [...this.state.recording, newItem],
+            recording: [...this.state.recording, frame],
         });
+
     };
 
     clearRecording = () => {
@@ -57,16 +82,16 @@ export default class Keyboard extends Component {
     };
 
     playRecording = () => {
-        this.state.recording.forEach((notes, index) => {
+        this.state.recording.forEach(({id, notes, start, duration}) => {
             setTimeout(() => {
                 this.setState({activeNotes: []}); // Ensure that repeated notes are played again
                 this.setState({activeNotes: notes.split(".")});
-            }, index * NOTE_DURATION);
+            }, start);
+            setTimeout(() => {
+                // TODO: make this work with id's. Might not be needed though
+                this.setState({activeNotes: this.state.activeNotes.filter(an => !notes.split(".").includes(an))});
+            }, start + duration);
         });
-        setTimeout(
-            () => this.setState({activeNotes: []}),
-            this.state.recording.length * NOTE_DURATION
-        );
     };
 
     render() {
@@ -104,7 +129,12 @@ export default class Keyboard extends Component {
                             )
                         }
                         <p className={boxStyles.box} style={{width: `${PIANO_WIDTH}px`}}>
-                            Current recording: {this.state.recording.join(", ")}
+                            Current recording:
+                            {
+                                this.state.recording.map(frame => (
+                                    <span>{frame.notes} </span>
+                                ))
+                            }
                         </p>
                         <div className={pageStyles.row}>
                             <button
