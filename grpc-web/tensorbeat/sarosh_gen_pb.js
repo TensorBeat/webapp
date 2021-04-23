@@ -27,7 +27,7 @@ goog.exportSymbol('proto.tensorbeat.sarosh_gen.GenerateMusicResponse', null, glo
  * @constructor
  */
 proto.tensorbeat.sarosh_gen.GenerateMusicRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.tensorbeat.sarosh_gen.GenerateMusicRequest.repeatedFields_, null);
 };
 goog.inherits(proto.tensorbeat.sarosh_gen.GenerateMusicRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -48,7 +48,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.tensorbeat.sarosh_gen.GenerateMusicResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.tensorbeat.sarosh_gen.GenerateMusicResponse.repeatedFields_, null);
 };
 goog.inherits(proto.tensorbeat.sarosh_gen.GenerateMusicResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -58,6 +58,13 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.tensorbeat.sarosh_gen.GenerateMusicResponse.displayName = 'proto.tensorbeat.sarosh_gen.GenerateMusicResponse';
 }
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.tensorbeat.sarosh_gen.GenerateMusicRequest.repeatedFields_ = [1];
 
 
 
@@ -90,7 +97,7 @@ proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.toObject = function(o
  */
 proto.tensorbeat.sarosh_gen.GenerateMusicRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ytPlaylistUrl: jspb.Message.getFieldWithDefault(msg, 1, "")
+    notesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -129,7 +136,7 @@ proto.tensorbeat.sarosh_gen.GenerateMusicRequest.deserializeBinaryFromReader = f
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setYtPlaylistUrl(value);
+      msg.addNotes(value);
       break;
     default:
       reader.skipField();
@@ -160,9 +167,9 @@ proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.serializeBinary = fun
  */
 proto.tensorbeat.sarosh_gen.GenerateMusicRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getYtPlaylistUrl();
+  f = message.getNotesList();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeRepeatedString(
       1,
       f
     );
@@ -171,23 +178,49 @@ proto.tensorbeat.sarosh_gen.GenerateMusicRequest.serializeBinaryToWriter = funct
 
 
 /**
- * optional string yt_playlist_URL = 1;
- * @return {string}
+ * repeated string notes = 1;
+ * @return {!Array<string>}
  */
-proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.getYtPlaylistUrl = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.getNotesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.tensorbeat.sarosh_gen.GenerateMusicRequest} returns this
+ */
+proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.setNotesList = function(value) {
+  return jspb.Message.setField(this, 1, value || []);
 };
 
 
 /**
  * @param {string} value
+ * @param {number=} opt_index
  * @return {!proto.tensorbeat.sarosh_gen.GenerateMusicRequest} returns this
  */
-proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.setYtPlaylistUrl = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.addNotes = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.tensorbeat.sarosh_gen.GenerateMusicRequest} returns this
+ */
+proto.tensorbeat.sarosh_gen.GenerateMusicRequest.prototype.clearNotesList = function() {
+  return this.setNotesList([]);
+};
+
+
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.tensorbeat.sarosh_gen.GenerateMusicResponse.repeatedFields_ = [1];
 
 
 
@@ -220,7 +253,7 @@ proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.toObject = function(
  */
 proto.tensorbeat.sarosh_gen.GenerateMusicResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    song: msg.getSong_asB64()
+    notesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -258,8 +291,8 @@ proto.tensorbeat.sarosh_gen.GenerateMusicResponse.deserializeBinaryFromReader = 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setSong(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.addNotes(value);
       break;
     default:
       reader.skipField();
@@ -290,9 +323,9 @@ proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.serializeBinary = fu
  */
 proto.tensorbeat.sarosh_gen.GenerateMusicResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getSong_asU8();
+  f = message.getNotesList();
   if (f.length > 0) {
-    writer.writeBytes(
+    writer.writeRepeatedString(
       1,
       f
     );
@@ -301,44 +334,39 @@ proto.tensorbeat.sarosh_gen.GenerateMusicResponse.serializeBinaryToWriter = func
 
 
 /**
- * optional bytes song = 1;
- * @return {string}
+ * repeated string notes = 1;
+ * @return {!Array<string>}
  */
-proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.getSong = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.getNotesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
 /**
- * optional bytes song = 1;
- * This is a type-conversion wrapper around `getSong()`
- * @return {string}
- */
-proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.getSong_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getSong()));
-};
-
-
-/**
- * optional bytes song = 1;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getSong()`
- * @return {!Uint8Array}
- */
-proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.getSong_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getSong()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
+ * @param {!Array<string>} value
  * @return {!proto.tensorbeat.sarosh_gen.GenerateMusicResponse} returns this
  */
-proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.setSong = function(value) {
-  return jspb.Message.setProto3BytesField(this, 1, value);
+proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.setNotesList = function(value) {
+  return jspb.Message.setField(this, 1, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.tensorbeat.sarosh_gen.GenerateMusicResponse} returns this
+ */
+proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.addNotes = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.tensorbeat.sarosh_gen.GenerateMusicResponse} returns this
+ */
+proto.tensorbeat.sarosh_gen.GenerateMusicResponse.prototype.clearNotesList = function() {
+  return this.setNotesList([]);
 };
 
 

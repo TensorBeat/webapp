@@ -4,8 +4,10 @@ import * as tensorbeat_common_pb from '../tensorbeat/common_pb';
 
 
 export class GenerateMusicRequest extends jspb.Message {
-  getYtPlaylistUrl(): string;
-  setYtPlaylistUrl(value: string): GenerateMusicRequest;
+  getNotesList(): Array<string>;
+  setNotesList(value: Array<string>): GenerateMusicRequest;
+  clearNotesList(): GenerateMusicRequest;
+  addNotes(value: string, index?: number): GenerateMusicRequest;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GenerateMusicRequest.AsObject;
@@ -17,15 +19,15 @@ export class GenerateMusicRequest extends jspb.Message {
 
 export namespace GenerateMusicRequest {
   export type AsObject = {
-    ytPlaylistUrl: string,
+    notesList: Array<string>,
   }
 }
 
 export class GenerateMusicResponse extends jspb.Message {
-  getSong(): Uint8Array | string;
-  getSong_asU8(): Uint8Array;
-  getSong_asB64(): string;
-  setSong(value: Uint8Array | string): GenerateMusicResponse;
+  getNotesList(): Array<string>;
+  setNotesList(value: Array<string>): GenerateMusicResponse;
+  clearNotesList(): GenerateMusicResponse;
+  addNotes(value: string, index?: number): GenerateMusicResponse;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GenerateMusicResponse.AsObject;
@@ -37,7 +39,7 @@ export class GenerateMusicResponse extends jspb.Message {
 
 export namespace GenerateMusicResponse {
   export type AsObject = {
-    song: Uint8Array | string,
+    notesList: Array<string>,
   }
 }
 
