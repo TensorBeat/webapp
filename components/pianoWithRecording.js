@@ -12,6 +12,10 @@ class PianoWithRecording extends React.Component {
     notesRecorded: false,
   };
 
+  state = {
+    noteDuration: DEFAULT_NOTE_DURATION,
+  };
+
   initialTime;
   notesBeingRecorded = {};
 

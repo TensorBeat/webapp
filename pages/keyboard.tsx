@@ -42,6 +42,20 @@ interface KeyboardProps {}
 
 const PIANO_WIDTH = 500;
 const NOTE_DURATION = 200; // milliseconds
+const SORTED_PITCHES = [
+  "C",
+  "C#",
+  "D",
+  "D#",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "G#",
+  "A",
+  "A#",
+  "B",
+];
 
 export default class Keyboard extends Component {
   state: KeyboardState = {
@@ -120,7 +134,15 @@ export default class Keyboard extends Component {
   sendRecordingToGenerator = () => {
     const client = new SaroshGeneratorClient("http://grpc-web.tensorbeat.com");
     const musicRequest = new GenerateMusicRequest();
-    musicRequest.setNotesList(this.state.recording.map((frame) => frame.notes));
+    musicRequest.setNotesList(
+      this.state.recording.map((frame) => {
+        // must convert numerical notes to MIDI for Sarosh's library
+        const notes = frame.notes;
+        return notes.includes(".")
+          ? notes
+          : SORTED_PITCHES[+notes % 12] + Math.floor(+notes / 12);
+      })
+    );
 
     this.setState({ musicIsGenerating: false });
     client.generateMusic(musicRequest, null).then((res) => {
