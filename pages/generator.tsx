@@ -3,14 +3,19 @@ import pageStyles from "../styles/page.module.css";
 import boxStyles from "../styles/box.module.css";
 import logo from "../public/tensorbeat-muted.svg";
 import StandardFooter from "../components/standardFooter";
+import {SaroshGeneratorClient} from "../grpc-web/tensorbeat/Sarosh_genServiceClientPb";
+import {GenerateMusicRequest} from "../grpc-web/tensorbeat/sarosh_gen_pb";
 
 export default function Generator() {
-    function handleSubmit(e) {
-        fetch("https://test", {
-            method: "POST",
-            body: {
-                playlist: e.target.elements["playlist"],
-            },
+
+    function handleSubmit(e: any) {
+
+        const client = new SaroshGeneratorClient("http://grpc-web.tensorbeat.com");
+        const req = new GenerateMusicRequest();
+        req.setYtPlaylistUrl(e.target.elements["playlist"]);
+
+        client.generateMusic(req, null).then(res => {
+
         });
 
         e.preventDefault();

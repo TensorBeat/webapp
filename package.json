@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "google-protobuf": "^3.15.8",
+    "grpc-web": "^1.2.1",
     "next": "10.0.7",
     "next-images": "^1.7.0",
     "react": "17.0.1",
