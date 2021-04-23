@@ -10,6 +10,7 @@ import PianoWithRecording from "../components/pianoWithRecording";
 
 import { v4 as uuidv4 } from "uuid";
 import { GenerateMusicRequest } from "../grpc-web/tensorbeat/sarosh_gen_pb";
+import { SaroshGeneratorClient } from "../grpc-web/tensorbeat/Sarosh_genServiceClientPb";
 
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
@@ -37,6 +38,7 @@ interface KeyboardState {
   generatedMusic: string[] | undefined;
   musicIsGenerating: boolean;
 }
+interface KeyboardProps {}
 
 const PIANO_WIDTH = 500;
 const NOTE_DURATION = 200; // milliseconds
@@ -59,7 +61,7 @@ export default class Keyboard extends Component {
     });
   };
 
-  constructor(props) {
+  constructor(props: KeyboardProps) {
     super(props);
     this.scheduledEvents = [];
   }
@@ -106,8 +108,8 @@ export default class Keyboard extends Component {
     });
   };
 
-  playGeneratedMusic = (notes: string[]) => {
-    notes.forEach((note, index) => {
+  playGeneratedMusic = () => {
+    this.state.generatedMusic?.forEach((note, index) => {
       setTimeout(() => {
         this.setState({ activeNotes: [] });
         this.setState({ activeNotes: note.split(".") });
@@ -116,8 +118,17 @@ export default class Keyboard extends Component {
   };
 
   sendRecordingToGenerator = () => {
+    const client = new SaroshGeneratorClient("http://grpc-web.tensorbeat.com");
     const musicRequest = new GenerateMusicRequest();
-    console.log(this.state.recording.map((frame) => frame.notes));
+    musicRequest.setNotesList(this.state.recording.map((frame) => frame.notes));
+
+    this.setState({ musicIsGenerating: false });
+    client.generateMusic(musicRequest, null).then((res) => {
+      this.setState({
+        generatedMusic: res.getNotesList(),
+        musicIsGenerating: false,
+      });
+    });
   };
 
   render() {
@@ -139,7 +150,7 @@ export default class Keyboard extends Component {
                 <SoundFontProvider
                   audioContext={this.state.audioContext}
                   hostname={soundfontHostname}
-                  render={({ isLoading, playNote, stopNote }) => (
+                  render={({ isLoading, playNote, stopNote }: any) => (
                     <PianoWithRecording
                       appendToRecording={this.appendToRecording}
                       noteRange={noteRange}
@@ -179,6 +190,13 @@ export default class Keyboard extends Component {
                 disabled={this.state.musicIsGenerating}
               >
                 Generate Music!
+              </button>
+              <button
+                className={pageStyles.button}
+                onClick={this.playGeneratedMusic}
+                hidden={!this.state.generatedMusic}
+              >
+                Play Generated Music
               </button>
             </div>
           </div>
