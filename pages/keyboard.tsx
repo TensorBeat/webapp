@@ -101,6 +101,10 @@ export default class Keyboard extends Component {
     });
   };
 
+  sendRecordingToGenerator = () => {
+    console.log(this.state.recording.map((frame) => frame.notes));
+  };
+
   render() {
     return (
       <div className={pageStyles.container}>
@@ -137,8 +141,8 @@ export default class Keyboard extends Component {
             }
             <p className={boxStyles.box} style={{ width: `${PIANO_WIDTH}px` }}>
               Current recording:
-              {this.state.recording.map((frame) => (
-                <span>{frame.notes} </span>
+              {this.state.recording.map((frame, index) => (
+                <span key={index}>{frame.notes} </span>
               ))}
             </p>
             <div className={pageStyles.row}>
@@ -153,6 +157,12 @@ export default class Keyboard extends Component {
                 onClick={this.clearRecording}
               >
                 Clear
+              </button>
+              <button
+                className={pageStyles.button}
+                onClick={this.sendRecordingToGenerator}
+              >
+                Generate Music!
               </button>
             </div>
           </div>
