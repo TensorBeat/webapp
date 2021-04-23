@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import pageStyles from "../styles/page.module.css";
 import boxStyles from "../styles/box.module.css";
 import StandardFooter from "../components/standardFooter";
+// @ts-ignore
 import { KeyboardShortcuts, MidiNumbers } from "react-piano";
 import "react-piano/dist/styles.css";
 import SoundFontProvider from "../components/soundFontProvider";
@@ -124,6 +125,12 @@ export default class Keyboard extends Component {
 
   playGeneratedMusic = () => {
     this.state.generatedMusic?.forEach((note, index) => {
+      if (note.includes(".")) {
+        // chords start at 0, so transpose them up to c4
+        note = note.split(".").map(n => n + MidiNumbers.fromNote("c4")).join(".")
+      }
+      // generator outputs flats as "-"
+      note.replace("-", "b");
       setTimeout(() => {
         this.setState({ activeNotes: [] });
         this.setState({ activeNotes: note.split(".") });

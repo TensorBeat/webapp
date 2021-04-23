@@ -10,13 +10,13 @@ export default function Generator() {
 
     function handleSubmit(e: any) {
 
-        const client = new SaroshGeneratorClient("http://grpc-web.tensorbeat.com");
-        const req = new GenerateMusicRequest();
-        req.setYtPlaylistUrl(e.target.elements["playlist"]);
-
-        client.generateMusic(req, null).then(res => {
-
-        });
+        // const client = new SaroshGeneratorClient("http://grpc-web.tensorbeat.com");
+        // const req = new GenerateMusicRequest();
+        // req.setYtPlaylistUrl(e.target.elements["playlist"]);
+        //
+        // client.generateMusic(req, null).then(res => {
+        //
+        // });
 
         e.preventDefault();
         return false;
