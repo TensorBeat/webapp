@@ -9,6 +9,7 @@ import SoundFontProvider from "../components/soundFontProvider";
 import PianoWithRecording from "../components/pianoWithRecording";
 
 import { v4 as uuidv4 } from "uuid";
+import { GenerateMusicRequest } from "../grpc-web/tensorbeat/sarosh_gen_pb";
 
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
@@ -33,6 +34,8 @@ interface KeyboardState {
   recording: Frame[];
   activeNotes: string[];
   audioContext: any;
+  generatedMusic: string[] | undefined;
+  musicIsGenerating: boolean;
 }
 
 const PIANO_WIDTH = 500;
@@ -43,6 +46,8 @@ export default class Keyboard extends Component {
     audioContext: null,
     recording: [],
     activeNotes: [],
+    generatedMusic: undefined,
+    musicIsGenerating: false,
   };
 
   scheduledEvents: [];
@@ -83,7 +88,7 @@ export default class Keyboard extends Component {
   };
 
   playRecording = () => {
-    let initialTime = this.state.recording[0].start;
+    const initialTime = this.state.recording[0].start;
     this.state.recording.forEach(({ id, notes, start, duration }) => {
       let startDelay = start - initialTime;
       setTimeout(() => {
@@ -101,7 +106,17 @@ export default class Keyboard extends Component {
     });
   };
 
+  playGeneratedMusic = (notes: string[]) => {
+    notes.forEach((note, index) => {
+      setTimeout(() => {
+        this.setState({ activeNotes: [] });
+        this.setState({ activeNotes: note.split(".") });
+      }, index * NOTE_DURATION);
+    });
+  };
+
   sendRecordingToGenerator = () => {
+    const musicRequest = new GenerateMusicRequest();
     console.log(this.state.recording.map((frame) => frame.notes));
   };
 
@@ -161,6 +176,7 @@ export default class Keyboard extends Component {
               <button
                 className={pageStyles.button}
                 onClick={this.sendRecordingToGenerator}
+                disabled={this.state.musicIsGenerating}
               >
                 Generate Music!
               </button>
