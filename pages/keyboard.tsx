@@ -126,16 +126,17 @@ export default class Keyboard extends Component {
     };
 
     playGeneratedMusic = () => {
+
         this.state.generatedMusic?.forEach((note, index) => {
             if (note.includes(".")) {
                 // chords start at 0, so transpose them up to c4
-                note = note.split(".").map(n => n + MidiNumbers.fromNote("c4")).join(".")
+                note = note.split(".").map(n => (+n) + MidiNumbers.fromNote("c4")).join(".");
             }
             // generator outputs flats as "-"
-            note.replace("-", "b");
+            note = note.replace("-", "b");
             setTimeout(() => {
-                this.setState({activeNotes: []});
-                this.setState({activeNotes: note.split(".")});
+                this.setState({ activeNotes: [] });
+                this.setState({ activeNotes: note.split(".") });
             }, index * NOTE_DURATION);
         });
     };
@@ -225,7 +226,7 @@ export default class Keyboard extends Component {
                             <button
                                 className={pageStyles.button}
                                 onClick={this.playGeneratedMusic}
-                                hidden={!this.state.generatedMusic}
+                                // hidden={!this.state.generatedMusic}
                             >
                                 Play Generated Music
                             </button>
