@@ -70,7 +70,7 @@ export default function Home() {
                         be specified as either a youtube playlist or a sequence
                         played on the Midi piano.
                     </p>
-                    <a href={"/generator"} className={styles.button}>
+                    <a href={"/keyboard"} className={styles.button}>
                         Generate Music
                     </a>
                 </div>

@@ -121,7 +121,7 @@ export default class Keyboard extends Component {
                         (an) => !notes.split(".").includes(an)
                     ),
                 });
-            }, startDelay + duration);
+            }, startDelay + duration - 1); // minus one just in case there's overlap with the next note
         });
     };
 
