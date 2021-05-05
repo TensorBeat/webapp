@@ -43,12 +43,6 @@ export default function Recommender() {
                 </div>
             </main>
 
-            <img
-                src={logo}
-                alt={"TensorBeat logo"}
-                className={pageStyles.mutedLogo}
-            />
-
             <StandardFooter />
         </div>
     );
