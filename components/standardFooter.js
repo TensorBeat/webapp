@@ -14,7 +14,7 @@ export default function StandardFooter() {
                 <span>|</span>
                 <a href={"/recommender"}>Song Recommendations</a>
                 <span>|</span>
-                <a href={"/generator"}>Music Generator</a>
+                <a href={"/sample"}>Sample Music</a>
                 <span>|</span>
                 <a href={"/keyboard"}>MIDI Keyboard</a>
             </footer>
