@@ -213,7 +213,7 @@ export default class Keyboard extends Component {
                                     )
                             }
                         </p>
-                        <div className={pageStyles.row}>
+                        <div className={pageStyles.row} style={{justifyContent: "center"}}>
                             <button
                                 className={pageStyles.button}
                                 onClick={this.playRecording}
@@ -236,7 +236,7 @@ export default class Keyboard extends Component {
                             <button
                                 className={pageStyles.button}
                                 onClick={this.playGeneratedMusic}
-                                hidden={!this.state.generatedMusic}
+                                disabled={!this.state.generatedMusic}
                             >
                                 Play Generated Music
                             </button>

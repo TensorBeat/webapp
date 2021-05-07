@@ -1,10 +1,30 @@
 import Head from "next/head";
 import pageStyles from "../styles/page.module.css";
-import boxStyles from "../styles/box.module.css";
-import logo from "../public/tensorbeat-muted.svg";
+import recommenderStyles from "../styles/recommender.module.css";
 import StandardFooter from "../components/standardFooter";
+import {useEffect, useState} from "react";
+import {RecommenderServiceClient} from "../grpc-web/tensorbeat/RecommenderServiceClientPb";
+import {GetSongsRequest, RecommenderRequest} from "../grpc-web/tensorbeat/recommender_pb";
+
+interface Song {
+    name: string,
+}
 
 export default function Recommender() {
+
+    const [songList, setSongList] = useState<Song[]>([]);
+
+    useEffect(() => {
+
+        const client = new RecommenderServiceClient("http://grpc-web.tensorbeat.com");
+        const getSongsRequest = new GetSongsRequest();
+
+        client.getSongs(getSongsRequest, null).then(res => {
+            setSongList(res.getSongNameList().map(song => ({name: song})))
+        });
+
+    });
+
     return (
         <div className={pageStyles.container}>
             <Head>
@@ -21,16 +41,18 @@ export default function Recommender() {
                         other pieces of music in the Datalake based on one or
                         more songs supplied by the user. As such, the
                         recommender only has one function:
-                        <ul>
-                            <li>
-                                Song recommendation: generates a list of song
-                                IDs based on the euclidean distance between
-                                songs in the datalake and the songs supplied by
-                                the user.
-                            </li>
-                        </ul>
                     </p>
+
                 </div>
+
+                <select className={recommenderStyles.songSelector}>
+                    <option disabled={true} selected={true}>Select a song</option>
+                    {
+                        songList.map((song, n) => (
+                            <option value={song.name} key={n}>{song.name}</option>
+                        ))
+                    }
+                </select>
 
                 <div className={pageStyles.section}>
                     <a

@@ -28,9 +28,12 @@ export default function Home() {
                         app relies on an LSTM to generate midi music. For now,
                         the only way to specify data is by playing a piano song.
                     </p>
+                    <a href={"/sample"} className={styles.button}>
+                        Listen to Samples
+                    </a>
                 </div>
 
-                <span className={styles.hr} />
+                <span className={styles.hr} style={{marginTop: "30px"}} />
 
                 <div className={styles.section}>
                     <h2>Song Recommendations</h2>
