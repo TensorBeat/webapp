@@ -1,9 +1,6 @@
 import Head from "next/head";
 import pageStyles from "../styles/page.module.css";
-import boxStyles from "../styles/box.module.css";
 import StandardFooter from "../components/standardFooter";
-import { SaroshGeneratorClient } from "../grpc-web/tensorbeat/Sarosh_genServiceClientPb";
-import { GenerateMusicRequest } from "../grpc-web/tensorbeat/sarosh_gen_pb";
 
 const cloud_bucket_songs = [
 	
@@ -46,10 +43,6 @@ const cloud_bucket_songs = [
         name: "Luke's Piano",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/Luke%20Faceroll.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
     {
         name: "Pop Conditioned",
@@ -60,10 +53,6 @@ const cloud_bucket_songs = [
         name: "Test Output 3",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/test_output_3.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
    {
         name: "Test Output 5",

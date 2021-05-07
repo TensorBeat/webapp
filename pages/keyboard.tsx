@@ -213,7 +213,7 @@ export default class Keyboard extends Component {
                                     )
                             }
                         </p>
-                        <div className={pageStyles.row} style={{justifyContent: "center !important"}}>
+                        <div className={pageStyles.row} style={{alignContent: "center !important"}}>
                             <button
                                 className={pageStyles.button}
                                 onClick={this.playRecording}
