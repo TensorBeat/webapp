@@ -38,6 +38,7 @@ interface KeyboardState {
     audioContext: any;
     generatedMusic: string[] | undefined;
     musicIsGenerating: boolean;
+    loading: boolean,
 }
 
 interface KeyboardProps {
@@ -67,6 +68,7 @@ export default class Keyboard extends Component {
         activeNotes: [],
         generatedMusic: undefined,
         musicIsGenerating: false,
+        loading: false,
     };
 
     scheduledEvents: [];
@@ -154,11 +156,12 @@ export default class Keyboard extends Component {
             })
         );
 
-        this.setState({musicIsGenerating: false});
+        this.setState({musicIsGenerating: false, loading: true});
         client.generateMusic(musicRequest, null).then((res) => {
             this.setState({
                 generatedMusic: res.getNotesList(),
                 musicIsGenerating: false,
+                loading: false,
             });
         });
     };
@@ -198,10 +201,17 @@ export default class Keyboard extends Component {
                             )
                         }
                         <p className={boxStyles.box} style={{width: `${PIANO_WIDTH}px`}}>
-                            Current recording:
-                            {this.state.recording.map((frame, index) => (
-                                <span key={index}>{frame.notes} </span>
-                            ))}
+                            {
+                                this.state.loading ? <div>Loading...</div> :
+                                    (
+                                        <div>
+                                            Current recording:
+                                            {this.state.recording.map((frame, index) => (
+                                                <span key={index}>{frame.notes} </span>
+                                            ))}
+                                        </div>
+                                    )
+                            }
                         </p>
                         <div className={pageStyles.row}>
                             <button
@@ -226,7 +236,7 @@ export default class Keyboard extends Component {
                             <button
                                 className={pageStyles.button}
                                 onClick={this.playGeneratedMusic}
-                                // hidden={!this.state.generatedMusic}
+                                hidden={!this.state.generatedMusic}
                             >
                                 Play Generated Music
                             </button>
