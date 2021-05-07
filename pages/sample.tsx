@@ -101,11 +101,6 @@ export default function Generator() {
                                     element.
                                 </audio>
                             </div>
-                            {Object.entries(song.meta).map(([name, value], index) => (
-                                <p key={index}>
-                                    {name}: {value}
-                                </p>
-                            ))}
                         </div>
                     ))}
                 </div>
