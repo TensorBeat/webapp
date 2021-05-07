@@ -54,9 +54,9 @@ export default function Generator() {
                                     element.
                                 </audio>
                             </div>
-                            {Object.keys(song.meta).map((name, index) => (
+                            {Object.entries(song.meta).map(([name, value], index) => (
                                 <p key={index}>
-                                    {/*{name}: {song.meta[name]}*/}
+                                    {name}: {value}
                                 </p>
                             ))}
                         </div>
