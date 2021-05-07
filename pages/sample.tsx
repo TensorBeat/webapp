@@ -5,6 +5,15 @@ import StandardFooter from "../components/standardFooter";
 import { SaroshGeneratorClient } from "../grpc-web/tensorbeat/Sarosh_genServiceClientPb";
 import { GenerateMusicRequest } from "../grpc-web/tensorbeat/sarosh_gen_pb";
 
+const cloud_bucket_songs = [
+    {
+        url:
+            "https://storage.googleapis.com/sarosh-gen/Get%20Up%20Offa%20That%20Thing-255779303.mp3",
+        name: "Get Up Offa That Thing",
+        details: "A song by James Brown that I think is pretty funny",
+    },
+];
+
 export default function Generator() {
     return (
         <div className={pageStyles.container}>
@@ -22,6 +31,17 @@ export default function Generator() {
                         so far.
                     </p>
                 </div>
+
+                {cloud_bucket_songs.map((song, index) => (
+                    <div key={index}>
+                        {song.name}:
+                        <audio controls>
+                            <source src={song.url} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p>{song.details}</p>
+                    </div>
+                ))}
 
                 <div
                     className={pageStyles.section}
