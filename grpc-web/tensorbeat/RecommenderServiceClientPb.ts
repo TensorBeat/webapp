@@ -75,5 +75,45 @@ export class RecommenderServiceClient {
     this.methodInfoRecommendSong);
   }
 
+  methodInfoGetSongs = new grpcWeb.AbstractClientBase.MethodInfo(
+    tensorbeat_recommender_pb.GetSongsResponse,
+    (request: tensorbeat_recommender_pb.GetSongsRequest) => {
+      return request.serializeBinary();
+    },
+    tensorbeat_recommender_pb.GetSongsResponse.deserializeBinary
+  );
+
+  getSongs(
+    request: tensorbeat_recommender_pb.GetSongsRequest,
+    metadata: grpcWeb.Metadata | null): Promise<tensorbeat_recommender_pb.GetSongsResponse>;
+
+  getSongs(
+    request: tensorbeat_recommender_pb.GetSongsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback: (err: grpcWeb.Error,
+               response: tensorbeat_recommender_pb.GetSongsResponse) => void): grpcWeb.ClientReadableStream<tensorbeat_recommender_pb.GetSongsResponse>;
+
+  getSongs(
+    request: tensorbeat_recommender_pb.GetSongsRequest,
+    metadata: grpcWeb.Metadata | null,
+    callback?: (err: grpcWeb.Error,
+               response: tensorbeat_recommender_pb.GetSongsResponse) => void) {
+    if (callback !== undefined) {
+      return this.client_.rpcCall(
+        this.hostname_ +
+          '/tensorbeat.recommender.RecommenderService/GetSongs',
+        request,
+        metadata || {},
+        this.methodInfoGetSongs,
+        callback);
+    }
+    return this.client_.unaryCall(
+    this.hostname_ +
+      '/tensorbeat.recommender.RecommenderService/GetSongs',
+    request,
+    metadata || {},
+    this.methodInfoGetSongs);
+  }
+
 }
 
