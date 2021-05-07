@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/rowan-senior-project/tensorbeat-frontend:v0.2.1
+        image: gcr.io/rowan-senior-project/tensorbeat-frontend:v0.2.3
         env:
           - name: PORT
             value: "50051"
