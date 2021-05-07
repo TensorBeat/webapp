@@ -6,66 +6,41 @@ import { SaroshGeneratorClient } from "../grpc-web/tensorbeat/Sarosh_genServiceC
 import { GenerateMusicRequest } from "../grpc-web/tensorbeat/sarosh_gen_pb";
 
 const cloud_bucket_songs = [
+	
+   {
+        name: "Recomposed",
+        url:
+            "https://storage.googleapis.com/sarosh-gen/mp3s/Recomposed.mp3",
+    },
+   {
+        name: "Jazz Conditioned",
+        url:
+            "https://storage.googleapis.com/sarosh-gen/mp3s/jazz_v2.mp3",
+    },
+   {
+        name: "Ominous Overfitting",
+        url:
+            "https://storage.googleapis.com/sarosh-gen/mp3s/Ominous_still_overfits.mp3",
+    },
    {
         name: "Boss Music",
 	url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/Boss%20Music.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
    {
         name: "GSU Theme",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/GSU_Theme.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
-    },
-     {
-        name: "Recomposed",
-        url:
-            "https://storage.googleapis.com/sarosh-gen/mp3s/Recomposed.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
    {
         name: "Recomposed 2",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/Recomposed%202.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
-    {
-        name: "Jazz Conditioned",
-        url:
-            "https://storage.googleapis.com/sarosh-gen/mp3s/jazz_v2.mp3",
-        meta: {
-            info: "My Favorite Franzl Lang song",
-        },
-    },
-    {
+   {
         name: "Pop Conditioned 2",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/Happier.mp3",
-        meta: {
-            info: "My Favorite Franzl Lang song",
-        },
-    },
-    {
-        name: "Ominous Overfitting",
-        url:
-            "https://storage.googleapis.com/sarosh-gen/mp3s/Ominous_still_overfits.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
     {
         name: "Luke's Piano",
@@ -80,10 +55,6 @@ const cloud_bucket_songs = [
         name: "Pop Conditioned",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/Pop%20Conditioned.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
     {
         name: "Test Output 3",
@@ -98,10 +69,6 @@ const cloud_bucket_songs = [
         name: "Test Output 5",
         url:
             "https://storage.googleapis.com/sarosh-gen/mp3s/test_output%20_5_condensed.mp3",
-        meta: {
-            "field 1": "information",
-            "field 2": "more information",
-        },
     },
 ];
 
