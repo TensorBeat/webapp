@@ -56,7 +56,7 @@ export default function Generator() {
                             </div>
                             {Object.keys(song.meta).map((name, index) => (
                                 <p key={index}>
-                                    {name}: {song.meta[name]}
+                                    {/*{name}: {song.meta[name]}*/}
                                 </p>
                             ))}
                         </div>
