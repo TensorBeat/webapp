@@ -1,17 +1,17 @@
 import Head from "next/head";
-import React, {Component} from "react";
+import React, { Component } from "react";
 import pageStyles from "../styles/page.module.css";
 import boxStyles from "../styles/box.module.css";
 import StandardFooter from "../components/standardFooter";
 // @ts-ignore
-import {KeyboardShortcuts, MidiNumbers} from "react-piano";
+import { KeyboardShortcuts, MidiNumbers } from "react-piano";
 import "react-piano/dist/styles.css";
 import SoundFontProvider from "../components/soundFontProvider";
 import PianoWithRecording from "../components/pianoWithRecording";
 
-import {v4 as uuidv4} from "uuid";
-import {GenerateMusicRequest} from "../grpc-web/tensorbeat/sarosh_gen_pb";
-import {SaroshGeneratorClient} from "../grpc-web/tensorbeat/Sarosh_genServiceClientPb";
+import { v4 as uuidv4 } from "uuid";
+import { GenerateMusicRequest } from "../grpc-web/tensorbeat/sarosh_gen_pb";
+import { SaroshGeneratorClient } from "../grpc-web/tensorbeat/Sarosh_genServiceClientPb";
 
 const soundfontHostname = "https://d1pzp51pvbm36p.cloudfront.net";
 
@@ -37,12 +37,10 @@ interface KeyboardState {
     activeNotes: string[];
     audioContext: any;
     generatedMusic: string[] | undefined;
-    musicIsGenerating: boolean;
-    loading: boolean,
+    loading: boolean;
 }
 
-interface KeyboardProps {
-}
+interface KeyboardProps {}
 
 const PIANO_WIDTH = 500;
 const NOTE_DURATION = 200; // milliseconds
@@ -67,7 +65,6 @@ export default class Keyboard extends Component {
         recording: [],
         activeNotes: [],
         generatedMusic: undefined,
-        musicIsGenerating: false,
         loading: false,
     };
 
@@ -90,7 +87,7 @@ export default class Keyboard extends Component {
         start: number;
         duration: number;
     }) => {
-        const {notes, start, duration} = item;
+        const { notes, start, duration } = item;
 
         const frame: Frame = {
             id: uuidv4(),
@@ -105,35 +102,39 @@ export default class Keyboard extends Component {
     };
 
     clearRecording = () => {
-        this.setState({recording: []});
+        this.setState({ recording: [] });
     };
 
     playRecording = () => {
-        const initialTime = this.state.recording[0].start;
-        this.state.recording.forEach(({id, notes, start, duration}) => {
-            let startDelay = start - initialTime;
-            setTimeout(() => {
-                this.setState({activeNotes: []}); // Ensure that repeated notes are played again
-                this.setState({activeNotes: notes.split(".")});
-            }, startDelay);
-            setTimeout(() => {
-                // TODO: make this work with id's. Might not be needed though
-                this.setState({
-                    activeNotes: this.state.activeNotes.filter(
-                        (an) => !notes.split(".").includes(an)
-                    ),
-                });
-            }, startDelay + duration - 1); // minus one just in case there's overlap with the next note
-        });
+        if (this.state.recording.length !== 0) {
+            const initialTime = this.state.recording[0].start;
+            this.state.recording.forEach(({ id, notes, start, duration }) => {
+                let startDelay = start - initialTime;
+                setTimeout(() => {
+                    this.setState({ activeNotes: [] }); // Ensure that repeated notes are played again
+                    this.setState({ activeNotes: notes.split(".") });
+                }, startDelay);
+                setTimeout(() => {
+                    // TODO: make this work with id's. Might not be needed though
+                    this.setState({
+                        activeNotes: this.state.activeNotes.filter(
+                            (an) => !notes.split(".").includes(an)
+                        ),
+                    });
+                }, startDelay + duration - 1); // minus one just in case there's overlap with the next note
+            });
+        }
     };
 
     playGeneratedMusic = () => {
-
         this.state.generatedMusic?.forEach((note, index) => {
             note = note.replace("-", "b");
             if (note.includes(".")) {
                 // chords start at 0, so transpose them up to c4
-                note = note.split(".").map(n => MidiNumbers.fromNote(n)).join(".");
+                note = note
+                    .split(".")
+                    .map((n) => MidiNumbers.fromNote(n))
+                    .join(".");
             }
             // generator outputs flats as "-"
             setTimeout(() => {
@@ -144,7 +145,9 @@ export default class Keyboard extends Component {
     };
 
     sendRecordingToGenerator = () => {
-        const client = new SaroshGeneratorClient("http://grpc-web.tensorbeat.com");
+        const client = new SaroshGeneratorClient(
+            "http://grpc-web.tensorbeat.com"
+        );
         const musicRequest = new GenerateMusicRequest();
         musicRequest.setNotesList(
             this.state.recording.map((frame) => {
@@ -156,11 +159,10 @@ export default class Keyboard extends Component {
             })
         );
 
-        this.setState({musicIsGenerating: false, loading: true});
+        this.setState({ loading: true });
         client.generateMusic(musicRequest, null).then((res) => {
             this.setState({
                 generatedMusic: res.getNotesList(),
-                musicIsGenerating: false,
                 loading: false,
             });
         });
@@ -171,7 +173,7 @@ export default class Keyboard extends Component {
             <div className={pageStyles.container}>
                 <Head>
                     <title>Keyboard - TensorBeat</title>
-                    <link rel="icon" href="/tensorbeat.svg"/>
+                    <link rel="icon" href="/tensorbeat.svg" />
                 </Head>
 
                 <main className={pageStyles.main}>
@@ -185,51 +187,69 @@ export default class Keyboard extends Component {
                                 <SoundFontProvider
                                     audioContext={this.state.audioContext}
                                     hostname={soundfontHostname}
-                                    render={({isLoading, playNote, stopNote}: any) => (
+                                    render={({
+                                        isLoading,
+                                        playNote,
+                                        stopNote,
+                                    }: any) => (
                                         <PianoWithRecording
-                                            appendToRecording={this.appendToRecording}
+                                            appendToRecording={
+                                                this.appendToRecording
+                                            }
                                             noteRange={noteRange}
                                             width={PIANO_WIDTH}
                                             playNote={playNote}
                                             stopNote={stopNote}
-                                            disabled={isLoading}
+                                            disabled={
+                                                isLoading || this.state.loading
+                                            }
                                             activeNotes={this.state.activeNotes}
-                                            keyboardShortcuts={keyboardShortcuts}
+                                            keyboardShortcuts={
+                                                keyboardShortcuts
+                                            }
                                         />
                                     )}
                                 />
                             )
                         }
-                        <p className={boxStyles.box} style={{width: `${PIANO_WIDTH}px`}}>
-                            {
-                                this.state.loading ? <div>Loading...</div> :
-                                    (
-                                        <div>
-                                            Current recording:
-                                            {this.state.recording.map((frame, index) => (
-                                                <span key={index}>{frame.notes} </span>
-                                            ))}
-                                        </div>
-                                    )
-                            }
+                        <p
+                            className={boxStyles.box}
+                            style={{ width: `${PIANO_WIDTH}px` }}
+                        >
+                            {this.state.loading ? (
+                                <div>Loading...</div>
+                            ) : (
+                                <div>
+                                    Current recording:
+                                    {this.state.recording.map(
+                                        (frame, index) => (
+                                            <span key={index}>
+                                                {frame.notes}{" "}
+                                            </span>
+                                        )
+                                    )}
+                                </div>
+                            )}
                         </p>
-                        <div className={pageStyles.row} style={{alignContent: "center !important"}}>
+                        <div className={pageStyles.row}>
                             <button
                                 className={pageStyles.button}
                                 onClick={this.playRecording}
+                                disabled={this.state.loading}
                             >
                                 Play
                             </button>
                             <button
                                 className={pageStyles.button}
                                 onClick={this.clearRecording}
+                                disabled={this.state.loading}
                             >
                                 Clear
                             </button>
                             <button
                                 className={pageStyles.button}
                                 onClick={this.sendRecordingToGenerator}
-                                disabled={this.state.musicIsGenerating}
+                                disabled={this.state.loading}
                             >
                                 Generate Music!
                             </button>
@@ -243,7 +263,7 @@ export default class Keyboard extends Component {
                         </div>
                     </div>
                 </main>
-                <StandardFooter/>
+                <StandardFooter />
             </div>
         );
     }
